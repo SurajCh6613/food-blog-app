@@ -7,20 +7,18 @@ const recipeSchema = mongoose.Schema(
       required: true,
     },
     ingredients: {
-      type: String,
+      type: Array,
       required: true,
     },
     instructions: {
-      type: String,
+      type: Array,
       required: true,
     },
     time: {
       type: String,
-      required: true,
     },
     coverImage: {
       type: String,
-      required: true,
     },
   },
   { timestamps: true }
