@@ -68,6 +68,9 @@ section{
 
 .home .left h1{
   margin-bottom: 1rem;
+  font-size: 50px;
+  font-weight: 700;
+  color: #0099FF;
 }
 
 .home button{

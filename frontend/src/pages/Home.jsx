@@ -6,7 +6,7 @@ const Home = () => {
     <>
       <section className="home">
         <div className="left">
-          <h1>Food Recipe</h1>
+          <h1 className="">Food Recipe</h1>
           <h5>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus
             accusamus quos et voluptas repellat maiores voluptatem optio facere
