@@ -1,7 +1,9 @@
 import React from "react";
 import foodRecipe from "../assets/foodRecipe.png";
 import RecipeItems from "../components/RecipeItems";
+import { useNavigate } from "react-router-dom";
 const Home = () => {
+  const navigate = useNavigate();
   return (
     <>
       <section className="home">
@@ -12,7 +14,7 @@ const Home = () => {
             accusamus quos et voluptas repellat maiores voluptatem optio facere
             tempora voluptatibus!
           </h5>
-          <button>Share your Recipe</button>
+          <button onClick={()=>navigate("/addRecipe")}>Share your Recipe</button>
         </div>
         <div className="right">
           <img src={foodRecipe} alt="foodRecipe" width="320px" height="300px" />
