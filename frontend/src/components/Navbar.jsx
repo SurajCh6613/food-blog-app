@@ -10,6 +10,8 @@ const Navbar = () => {
   let token = localStorage.getItem("token");
   const [isLogin, setIsLogin] = useState(token ? false : true);
 
+  let user = JSON.parse(localStorage.getItem("user"));
+
   useEffect(() => {
     setIsLogin(token ? false : true);
   }, [token]);
@@ -49,7 +51,7 @@ const Navbar = () => {
               Favourites
             </NavLink>
           </li>
-          <li onClick={checkLogin}>{isLogin ? "Login" : "Logout"}</li>
+          <li onClick={checkLogin}>{isLogin ? "Login" : `Logout (${user.name})`}</li>
         </ul>
       </header>
       {isOpen && (
