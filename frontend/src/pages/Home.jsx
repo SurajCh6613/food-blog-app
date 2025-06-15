@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import foodRecipe from "../assets/foodRecipe.png";
 import RecipeItems from "../components/RecipeItems";
 import { useNavigate } from "react-router-dom";
+import Modal from "../components/Modal";
+import InputForm from "../components/InputForm";
 const Home = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const addRecipe = () => {
+    let token = localStorage.getItem("token");
+    if (token) navigate("/addRecipe");
+    else {
+      setIsOpen(true);
+    }
+  };
   return (
     <>
       <section className="home">
@@ -14,7 +24,7 @@ const Home = () => {
             accusamus quos et voluptas repellat maiores voluptatem optio facere
             tempora voluptatibus!
           </h5>
-          <button onClick={()=>navigate("/addRecipe")}>Share your Recipe</button>
+          <button onClick={addRecipe}>Share your Recipe</button>
         </div>
         <div className="right">
           <img src={foodRecipe} alt="foodRecipe" width="320px" height="300px" />
@@ -29,6 +39,12 @@ const Home = () => {
           ></path>
         </svg>
       </div>
+
+      {isOpen && (
+        <Modal onClose={() => setIsOpen(false)}>
+          <InputForm setIsOpen={() => setIsOpen(false)} />
+        </Modal>
+      )}
 
       <div className="recipe">
         <RecipeItems />
