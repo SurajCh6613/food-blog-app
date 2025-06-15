@@ -1,17 +1,17 @@
 const Recipes = require("../models/recipe");
-const multer = require('multer')
+const multer = require("multer");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './public/images')
+    cb(null, "./public/images");
   },
   filename: function (req, file, cb) {
-    const filename = Date.now() + '-' + file.fieldname
-    cb(null, filename)
-  }
-})
+    const filename = Date.now() + "-" + file.fieldname;
+    cb(null, filename);
+  },
+});
 
-const upload = multer({ storage: storage })
+const upload = multer({ storage: storage });
 
 // Get All Recipes
 const getRecipes = async (req, res) => {
@@ -49,16 +49,18 @@ const addRecipe = async (req, res) => {
       ingredients,
       instructions,
       time,
-      coverImage: req.file?.filename || "", // optional chaining
+      coverImage: req.file?.filename || "", // optional chaining,
+      createdBy: req.user.id,
     });
 
     return res.status(201).json(newRecipe);
   } catch (error) {
     console.error("Add Recipe Error:", error.message);
-    return res.status(500).json({ message: "Server error", error: error.message });
+    return res
+      .status(500)
+      .json({ message: "Server error", error: error.message });
   }
 };
-
 
 // Edit Recipe
 const editRecipe = async (req, res) => {
@@ -89,4 +91,11 @@ const deleteRecipe = async (req, res) => {
   }
 };
 
-module.exports = { getRecipes, getRecipe, addRecipe, editRecipe, deleteRecipe, upload };
+module.exports = {
+  getRecipes,
+  getRecipe,
+  addRecipe,
+  editRecipe,
+  deleteRecipe,
+  upload,
+};
