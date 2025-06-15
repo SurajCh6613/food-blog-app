@@ -11,8 +11,8 @@ const RecipeItems = () => {
     <div className='card-container'>
         {
             allRecipes?.map((item,index)=>(
-                <div key={index} className='card'>
-                    <img src={`http://localhost:3000/images/${item.coverImage}`} alt="" width="120px" height="100px" />
+                <div key={index} className='card hover:scale-105 duration-300'>
+                    <img src={`http://localhost:3000/images/${item.coverImage}`} alt="" className='object-cover w-full h-50' />
                     <div className='card-body'>
                         <div className='title'>{item.title}</div>
                         <div className='icons'>
