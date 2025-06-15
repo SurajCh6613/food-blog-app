@@ -7,21 +7,21 @@ const AddFoodRecipe = () => {
   const [recipeData, setRecipeData] = useState({});
   const navigate = useNavigate();
 
- const onHandleChange = (e) => {
-  const { name, value, files } = e.target;
+  const onHandleChange = (e) => {
+    const { name, value, files } = e.target;
 
-  let val;
+    let val;
 
-  if (name === "ingredients" || name === "instructions") {
-    val = value?.split(",")
-  } else if (name === "file") {
-    val = files?.[0];
-  } else {
-    val = value;
-  }
+    if (name === "ingredients" || name === "instructions") {
+      val = value?.split(",");
+    } else if (name === "file") {
+      val = files?.[0];
+    } else {
+      val = value;
+    }
 
-  setRecipeData((prev) => ({ ...prev, [name]: val }));
-};
+    setRecipeData((prev) => ({ ...prev, [name]: val }));
+  };
 
   const onHandleSubmit = async (e) => {
     e.preventDefault();
@@ -29,6 +29,7 @@ const AddFoodRecipe = () => {
       .post("http://localhost:3000/recipe", recipeData, {
         headers: {
           "Content-Type": "multipart/form-data",
+          authorization: "bearer " + localStorage.getItem("token"),
         },
       })
       .then(() => navigate("/"));

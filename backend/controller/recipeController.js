@@ -31,23 +31,34 @@ const getRecipe = async (req, res) => {
   return res.json(recipe);
 };
 
-// Add Recipe
+/// Add Recipe
 const addRecipe = async (req, res) => {
-  const { title, ingredients, instructions, time } = req.body;
-  if (!title || !ingredients || !instructions) {
-    return res.json({
-      message: "Required fields can't be empty",
+  try {
+    console.log(req.user);
+
+    const { title, ingredients, instructions, time } = req.body;
+
+    if (!title || !ingredients || !instructions) {
+      return res.status(400).json({
+        message: "Required fields can't be empty",
+      });
+    }
+
+    const newRecipe = await Recipes.create({
+      title,
+      ingredients,
+      instructions,
+      time,
+      coverImage: req.file?.filename || "", // optional chaining
     });
+
+    return res.status(201).json(newRecipe);
+  } catch (error) {
+    console.error("Add Recipe Error:", error.message);
+    return res.status(500).json({ message: "Server error", error: error.message });
   }
-  const newRecipe = await Recipes.create({
-    title,
-    ingredients,
-    instructions,
-    time,
-    coverImage:req.file.filename
-  });
-  return res.json(newRecipe);
 };
+
 
 // Edit Recipe
 const editRecipe = async (req, res) => {
