@@ -46,7 +46,7 @@ const Navbar = () => {
           <li>
             <NavLink
               onClick={() => isLogin && setIsOpen(true)}
-              to={!isLogin ? "/favourites" : "/"}
+              to={!isLogin ? "/favRecipes" : "/"}
             >
               Favourites
             </NavLink>

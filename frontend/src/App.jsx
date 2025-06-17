@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import MainNavigation from "./components/MainNavigation";
 import axios, { all } from "axios";
 import AddFoodRecipe from "./pages/AddFoodRecipe";
+import EditRecipe from "./pages/EditRecipe";
 
 const getAllRecipes = async () => {
   let allRecipes = [];
@@ -16,6 +17,10 @@ const getMyRecipes = async () => {
   let user = JSON.parse(localStorage.getItem("user"));
   let allRecipes = await getAllRecipes();
   return allRecipes.filter((item) => item.createdBy === user._id);
+};
+
+const getFavRecipes = () => {
+  return JSON.parse(localStorage.getItem("fav"));
 };
 
 const router = createBrowserRouter([
@@ -34,12 +39,17 @@ const router = createBrowserRouter([
         loader: getMyRecipes,
       },
       {
-        path: "/favourites",
+        path: "/favRecipes",
         element: <Home />,
+        loader: getFavRecipes,
       },
       {
         path: "/addRecipe",
         element: <AddFoodRecipe />,
+      },
+      {
+        path: "/editRecipe/:id",
+        element: <EditRecipe />,
       },
     ],
   },

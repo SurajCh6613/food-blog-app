@@ -63,30 +63,32 @@ const addRecipe = async (req, res) => {
 // Edit Recipe
 const editRecipe = async (req, res) => {
   const { title, ingredients, instructions, time } = req.body;
-  const recipe = await Recipes.findById(req.params.id);
-  if (!recipe) {
-    return res.json({ message: "Recipe not found" });
-  }
+  const { id } = req.params;
+  let recipe = await Recipes.findById(id);
   try {
-    await Recipes.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    return res.json({ title, ingredients, instructions, time });
+    if (recipe) {
+      let coverImage = req.file?.filename
+        ? req.file?.filename
+        : recipe.coverImage;
+      await Recipes.findByIdAndUpdate(
+        id,
+        { ...req.body, coverImage },
+        { new: true }
+      );
+      return res.json({ title, ingredients, instructions, time });
+    }
   } catch (error) {
     return res.status(404).json({ message: "Recipe not found" });
   }
 };
 
 const deleteRecipe = async (req, res) => {
-  try {
-    const recipe = await Recipes.findById(req.params.id);
-    if (!recipe) {
-      return res.status(404).json({ message: "Recipe not found" });
-    }
-
-    await Recipes.deleteOne({ _id: recipe._id }); // <-- fix here
-    return res.json({ message: "Recipe deleted successfully" });
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
+ try {
+   await Recipes.deleteOne({_id:req.params.id})
+   res.json({message:"Recipe Deleted"})
+ } catch (error) {
+  return res.status(400).json({message:"Delete Error"})
+ }
 };
 
 module.exports = {
